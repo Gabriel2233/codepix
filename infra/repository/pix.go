@@ -27,7 +27,7 @@ func (r PixKeyRepositoryDb) AddAccount(account *model.Account) error {
 	return nil
 }
 
-func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) Register(pixKey *model.PixKey) (*model.PixKey, error) {
 	err := r.Db.Create(pixKey).Error
 	if err != nil {
 		return nil, err
@@ -35,7 +35,7 @@ func (r PixKeyRepositoryDb) RegisterKey(pixKey *model.PixKey) (*model.PixKey, er
 	return pixKey, nil
 }
 
-func (r PixKeyRepositoryDb) FindKeyByKind(key string, kind string) (*model.PixKey, error) {
+func (r PixKeyRepositoryDb) FindByKind(key string, kind string) (*model.PixKey, error) {
 	var pixKey model.PixKey
 	r.Db.Preload("Account.Bank").First(&pixKey, "kind = ? and key = ?", kind, key)
 
